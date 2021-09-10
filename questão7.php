@@ -7,10 +7,10 @@
     <title>Questão7</title>
 </head>
 <body>
-    <form action= "questão7.php" method="post">
+    <form action= "questão7.php" method="get">
         <div class="form-group">
             <h3>Questão 7</h3>
-            Digite o nome: <input type="text" name ="nome"> 
+            Digite o nome: <input type="text" name ="nome1"> 
             Digite o segundo nome: <input type="text" name ="nome2">
             Digite o terceiro nome: <input type="text" name ="nome3">
             Digite o quarto nome: <input type="text" name ="nome4">
@@ -21,8 +21,10 @@
     </form>
 
 <?php 
+    
     criaArquivo();
     insereNomes();
+    imprimeTxt('nomes.txt');
 
     function criaArquivo() {
         if (!is_file("nomes.txt")) {
@@ -30,23 +32,28 @@
             fclose($arquivo);
         }
     }
-
-
-
-
+    
     function insereNomes(){
-        $nome1 = $_POST ['nome1'];
-        $nome2 = $_POST ['nome2'];
-        $nome3 = $_POST ['nome3'];
-        $nome4 = $_POST ['nome4'];
-        $nome5 = $_POST ['nome5'];
+        $nome1 = $_REQUEST ['nome1'];
+        $nome2 = $_REQUEST ['nome2'];
+        $nome3 = $_REQUEST ['nome3'];
+        $nome4 = $_REQUEST ['nome4'];
+        $nome5 = $_REQUEST ['nome5'];
 
         $arquivo = fopen("nomes.txt", 'a');
         $texto = $nome1 . "\n" . $nome2 . "\n" . $nome3 . "\n" . $nome4 . "\n" . $nome5 ;
         fwrite($arquivo, $texto);
         fclose($arquivo); 
-        
-}
+    }
+
+    function imprimeTxt($arquivo) {
+        $arquivo = fopen("nomes.txt", 'r');
+        while (!feof($arquivo)) {
+        $linha = fgets($arquivo);
+        echo $linha . "<br>";
+        }
+        fclose($arquivo);
+    }    
 
 
 ?>
